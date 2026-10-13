@@ -4,6 +4,14 @@
 
 This project fine-tunes AraBERT with LoRA to classify Arabic transaction records into four sensitivity levels: Top Secret, Secret, Restricted and Public. Every prediction comes with a calibrated confidence score. Transactions below a confidence threshold are sent to human review instead of being classified automatically.
 
+## The challenge
+
+Each sensitivity level has a known vocabulary: the terms that usually signal it. Matching those terms works when a transaction uses them. The harder case is a new transaction written with words that never appeared in any labeled example, such as a new kind of security incident. A keyword or TF-IDF model has nothing to go on for a word it has never seen.
+
+AraBERT was pre-trained on a large Arabic corpus, so it already places words with related meanings close to each other. Fine-tuning it here aims to carry that knowledge over: a transaction with an unfamiliar term that is close in meaning to known high-sensitivity terms should move toward the right level, and when the model is unsure, the transaction goes to human review instead of being classified automatically.
+
+The evaluation below covers transactions that share vocabulary with the training data. Performance on terms never seen in training is not measured yet.
+
 ![Classifying a single transaction](assets/api.png)
 
 ## Results
