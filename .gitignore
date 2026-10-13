@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+*.zip
+
+data/
+
+results/report/
+results/*/fold_*/
+!results/arabert_focal*/fold_*/
+!results/tfidf_weighted/fold_*/

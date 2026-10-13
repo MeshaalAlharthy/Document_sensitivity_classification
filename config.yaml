@@ -1,0 +1,28 @@
+seed: 42
+output_dir: results
+
+data:
+  path: data/synthetic_transactions.csv
+  duplicate_threshold: 0.9
+
+split:
+  seed: 42
+  n_splits: 5
+  val_fraction: 0.15
+  by_department: false
+
+model:
+  type: tfidf
+  use_department: false
+  imbalance: weighted
+  oversample_ratio: 0.5
+  c_grid: [0.5, 2.0, 8.0]
+  bert:
+    base: aubmindlab/bert-base-arabertv02
+    max_length: 256
+    batch_size: 16
+    epochs: 20
+    patience: 4
+    lr: 3.0e-4
+    lora_r: 8
+    focal_gamma: 2.0
