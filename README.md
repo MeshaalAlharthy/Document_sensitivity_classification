@@ -4,7 +4,7 @@
 
 This project fine-tunes AraBERT with LoRA to classify Arabic transaction records into four sensitivity levels: Top Secret, Secret, Restricted and Public. Every prediction comes with a calibrated confidence score. Transactions below a confidence threshold are sent to human review instead of being classified automatically.
 
-![Classification app](assets/app.png)
+![Classifying a single transaction](assets/api.png)
 
 ## Results
 
@@ -32,6 +32,8 @@ Evaluation is 5-fold cross-validation. Every transaction is tested once, by mode
 | Public | 0.831 | 0.848 | 0.840 | 802 |
 
 More than half of the errors are between Restricted and Public. Top Secret is never predicted as Public, and Public is never predicted as Top Secret.
+
+![Evaluation report](assets/results.png)
 
 ### Model comparison
 
@@ -72,6 +74,10 @@ python -m src.app
 The first run downloads the AraBERT base model from Hugging Face. The checkpoints in `results/` only contain the LoRA weights and the classification head. Inference runs on CPU, CUDA or Apple MPS.
 
 `src.predict` adds `predicted_level`, `confidence` and `needs_review` to the input file and writes it to `predictions_new.csv` (change it with `--output`). A sample output is in `examples/`.
+
+The app classifies one transaction at a time, or a whole CSV file in the same column layout as `examples/new_transactions.csv`. For a file, it shows each row's level, confidence and decision, with a summary of the counts per level and how many rows are referred for review. Try it with `examples/batch_transactions.csv`.
+
+![Classifying a CSV file](assets/one-at-a-time.png)
 
 ## Training
 
